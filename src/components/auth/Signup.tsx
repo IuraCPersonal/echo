@@ -5,10 +5,12 @@ import { Link as MUILink } from "@mui/material";
 import Auth from "./Auth";
 import { useCreateUser } from "../../hooks/useCreateUser";
 import { extractErrorMessage } from "../utils/error";
+import { useLogin } from "../../hooks/useLogin";
 
 const Signup: React.FC = () => {
   const [createUser] = useCreateUser();
   const [error, setError] = React.useState<string>("");
+  const { login } = useLogin();
 
   return (
     <Auth
@@ -25,6 +27,8 @@ const Signup: React.FC = () => {
             },
           });
 
+          // Login the user after signup
+          await login({ email, password });
           setError("");
         } catch (error) {
           const errorMessage = extractErrorMessage(error);

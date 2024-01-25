@@ -1,5 +1,8 @@
-import { Button, Stack, TextField } from "@mui/material";
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
+import { Button, Stack, TextField } from "@mui/material";
+
+import { useGetMe } from "../../hooks/useGetMe";
 
 interface AuthProps {
   submitLabel: string;
@@ -16,6 +19,15 @@ const Auth: React.FC<AuthProps> = ({
 }) => {
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
+
+  const navigate = useNavigate();
+  const { data: user } = useGetMe();
+
+  React.useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   return (
     <Stack
