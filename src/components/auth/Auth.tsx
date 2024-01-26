@@ -33,7 +33,7 @@ const Auth: React.FC<AuthProps> = ({
     <Stack
       spacing={3}
       sx={{
-        height: "100vh",
+        height: "calc(100vh - 64px)",
         maxWidth: {
           xs: "70%",
           md: "50%",
