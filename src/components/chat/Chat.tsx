@@ -23,6 +23,19 @@ const Chat: React.FC = () => {
   const { data: messages } = useGetMessages({ chatId });
   const [createMessage] = useCreateMessage(chatId);
 
+  const handleCreateMessage = async () => {
+    await createMessage({
+      variables: {
+        createMessageInput: {
+          content: message,
+          chatId,
+        },
+      },
+    });
+
+    setMessage("");
+  };
+
   return (
     <Stack
       sx={{
@@ -51,8 +64,14 @@ const Chat: React.FC = () => {
             flex: 1,
             width: "100%",
           }}
+          value={message}
           onChange={(event) => setMessage(event.target.value)}
           placeholder="Send message"
+          onKeyDown={async (event) => {
+            if (event.key === "Enter") {
+              await handleCreateMessage();
+            }
+          }}
         />
         <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
         <IconButton
@@ -60,16 +79,7 @@ const Chat: React.FC = () => {
           sx={{
             p: "10px",
           }}
-          onClick={() =>
-            createMessage({
-              variables: {
-                createMessageInput: {
-                  content: message,
-                  chatId,
-                },
-              },
-            })
-          }
+          onClick={handleCreateMessage}
         >
           <SendIcon />
         </IconButton>
