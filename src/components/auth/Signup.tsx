@@ -6,6 +6,7 @@ import Auth from "./Auth";
 import { useCreateUser } from "../../hooks/useCreateUser";
 import { extractErrorMessage } from "../../utils/error";
 import { useLogin } from "../../hooks/useLogin";
+import { UNKNOWN_ERROR_MESSAGE } from "../../constants/errors";
 
 const Signup: React.FC = () => {
   const [createUser] = useCreateUser();
@@ -38,7 +39,7 @@ const Signup: React.FC = () => {
             return;
           }
 
-          setError("Something went wrong");
+          setError(UNKNOWN_ERROR_MESSAGE);
         }
       }}
     >
