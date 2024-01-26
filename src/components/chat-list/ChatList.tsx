@@ -31,12 +31,14 @@ const ChatList: React.FC = () => {
             width: "100%",
             maxWidth: 360,
             bgcolor: "background.paper",
-            maxHeight: "calc(100vh - 64px - 64px)",
+            maxHeight: "80vh",
             overflowY: "auto",
           }}
         >
           {data?.chats.map((chat) => (
-            <ChatListItem key={chat._id} name={chat.name} />
+            <>
+              <ChatListItem key={chat._id} chat={chat} />
+            </>
           ))}
         </List>
       </Stack>
