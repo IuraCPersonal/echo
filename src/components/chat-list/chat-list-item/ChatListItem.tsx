@@ -17,7 +17,7 @@ const ChatListItem: React.FC<ChatListItemProps> = ({ name }) => {
     <>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+          <Avatar alt="Remy Sharp" src="" />
         </ListItemAvatar>
         <ListItemText
           primary={name}
