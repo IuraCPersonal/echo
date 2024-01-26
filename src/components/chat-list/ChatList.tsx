@@ -36,9 +36,7 @@ const ChatList: React.FC = () => {
           }}
         >
           {data?.chats.map((chat) => (
-            <>
-              <ChatListItem key={chat._id} chat={chat} />
-            </>
+            <ChatListItem key={chat._id} chat={chat} />
           ))}
         </List>
       </Stack>
