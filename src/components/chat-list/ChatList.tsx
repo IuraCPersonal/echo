@@ -5,12 +5,23 @@ import { Divider, Stack } from "@mui/material";
 import ChatListHeader from "./chat-list-header/ChatListHeader";
 import ChatListAdd from "./chat-list-add/ChatListAdd";
 import { useGetChats } from "../../hooks/useGetChats";
+import { usePath } from "../../hooks/usePath";
 
 const ChatList: React.FC = () => {
   const [chatListAddVisible, setChatListAddVisible] =
     React.useState<boolean>(false);
+  const [selectedChatId, setSelectedChatId] = React.useState<string>("");
 
+  const { path } = usePath();
   const { data } = useGetChats();
+
+  React.useEffect(() => {
+    const pathSplit = path.split("chats/");
+
+    if (pathSplit.length === 2) {
+      setSelectedChatId(pathSplit[1]);
+    }
+  }, [path]);
 
   return (
     <>
@@ -35,9 +46,15 @@ const ChatList: React.FC = () => {
             overflowY: "auto",
           }}
         >
-          {data?.chats.map((chat) => (
-            <ChatListItem key={chat._id} chat={chat} />
-          ))}
+          {data?.chats
+            .map((chat) => (
+              <ChatListItem
+                key={chat._id}
+                chat={chat}
+                selected={chat._id === selectedChatId}
+              />
+            ))
+            .reverse()}
         </List>
       </Stack>
     </>
