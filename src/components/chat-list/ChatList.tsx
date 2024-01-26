@@ -4,10 +4,13 @@ import ChatListItem from "./chat-list-item/ChatListItem";
 import { Divider, Stack } from "@mui/material";
 import ChatListHeader from "./chat-list-header/ChatListHeader";
 import ChatListAdd from "./chat-list-add/ChatListAdd";
+import { useGetChats } from "../../hooks/useGetChats";
 
 const ChatList: React.FC = () => {
   const [chatListAddVisible, setChatListAddVisible] =
     React.useState<boolean>(false);
+
+  const { data } = useGetChats();
 
   return (
     <>
@@ -32,19 +35,9 @@ const ChatList: React.FC = () => {
             overflowY: "auto",
           }}
         >
-          <ChatListItem />
-          <ChatListItem />
-          <ChatListItem />
-          <ChatListItem />
-          <ChatListItem />
-          <ChatListItem />
-          <ChatListItem />
-          <ChatListItem />
-          <ChatListItem />
-          <ChatListItem />
-          <ChatListItem />
-          <ChatListItem />
-          <ChatListItem />
+          {data?.chats.map((chat) => (
+            <ChatListItem key={chat._id} name={chat.name} />
+          ))}
         </List>
       </Stack>
     </>
