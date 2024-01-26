@@ -34,10 +34,7 @@ const Auth: React.FC<AuthProps> = ({
       spacing={3}
       sx={{
         height: "calc(100vh - 64px)",
-        maxWidth: {
-          xs: "70%",
-          md: "50%",
-        },
+        maxWidth: 360,
         margin: "0 auto",
         justifyContent: "center",
       }}
