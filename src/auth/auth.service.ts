@@ -31,4 +31,8 @@ export class AuthService {
       expires,
     });
   }
+
+  logout(response: Response) {
+    response.clearCookie('Authentication');
+  }
 }
