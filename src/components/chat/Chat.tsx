@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { useCreateMessage } from "../../hooks/useCreateMessage";
 import { useGetMessages } from "../../hooks/useGetMessages";
+import { useMessageCreated } from "../../hooks/useMessageCreated";
 
 const Chat: React.FC = () => {
   const params = useParams();
@@ -26,6 +27,7 @@ const Chat: React.FC = () => {
 
   const { data } = useGetChat({ _id: chatId });
   const { data: messages } = useGetMessages({ chatId });
+  const { data: latestMessage } = useMessageCreated({ chatId });
   const [createMessage] = useCreateMessage(chatId);
 
   const scrollToBottom = () => {
@@ -63,6 +65,7 @@ const Chat: React.FC = () => {
         sx={{
           maxHeight: "70vh",
           overflowY: "scroll",
+          flex: 1,
         }}
       >
         {messages?.messages.map((message) => (

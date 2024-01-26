@@ -33,9 +33,12 @@ const App = () => {
         <CssBaseline />
         <Header />
         <Guard>
-          <Container maxWidth="xl" sx={{ marginTop: "1rem" }}>
+          <Container
+            maxWidth="xl"
+            sx={{ marginTop: "1rem", height: "calc(100vh - 64px)" }}
+          >
             {showChatList ? (
-              <Grid container spacing={5}>
+              <Grid container spacing={5} sx={{ height: "100%" }}>
                 <Grid item xs={12} md={5} lg={4} xl={3}>
                   <ChatList />
                 </Grid>
