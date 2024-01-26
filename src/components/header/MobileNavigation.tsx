@@ -1,9 +1,11 @@
 import * as React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Box, IconButton, Menu, MenuItem, Typography } from "@mui/material";
+import { Page } from "../../interfaces/page.interface";
+import { router } from "../router/Routes";
 
 interface MobileNavigationProps {
-  pages: string[];
+  pages: Page[];
 }
 
 const MobileNavigation: React.FC<MobileNavigationProps> = ({ pages }) => {
@@ -51,8 +53,14 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ pages }) => {
           }}
         >
           {pages.map((page) => (
-            <MenuItem key={page} onClick={handleCloseNavMenu}>
-              <Typography textAlign="center">{page}</Typography>
+            <MenuItem
+              key={page.title}
+              onClick={() => {
+                router.navigate(page.path);
+                handleCloseNavMenu();
+              }}
+            >
+              <Typography textAlign="center">{page.title}</Typography>
             </MenuItem>
           ))}
         </Menu>
