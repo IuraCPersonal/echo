@@ -61,6 +61,7 @@ const ChatListAdd: React.FC<ChatListAddProps> = ({ open, handleClose }) => {
               style={{ width: 0 }}
               control={
                 <Switch
+                  disabled
                   defaultChecked={isPrivate}
                   value={isPrivate}
                   onChange={(event) => setIsPrivate(event.target.checked)}
@@ -106,8 +107,8 @@ const ChatListAdd: React.FC<ChatListAddProps> = ({ open, handleClose }) => {
                 const chat = await createChat({
                   variables: {
                     createChatInput: {
-                      isPrivate,
-                      name: name || undefined,
+                      // isPrivate,
+                      name,
                     },
                   },
                 });
