@@ -78,13 +78,27 @@ const Chat: React.FC = () => {
             )
             .map((message) => (
               <Grid container alignItems="center" marginBottom="1rem">
-                <Grid item xs={2} lg={1}>
-                  <Avatar alt="" src="" sx={{ height: 52, width: 52 }} />
+                <Grid
+                  item
+                  xs={2}
+                  lg={1}
+                  sx={{
+                    display: "grid",
+                    placeItems: "center",
+                  }}
+                >
+                  <Avatar alt="Me" src="" sx={{ height: 52, width: 52 }} />
                 </Grid>
                 <Grid item xs={10} lg={11}>
                   <Stack>
                     <Paper sx={{ width: "fit-content" }}>
-                      <Typography sx={{ p: "0.9rem" }}>
+                      <Typography
+                        sx={{
+                          p: "0.9rem",
+                          wordBreak: "break-word",
+                          overflowWrap: "break-word",
+                        }}
+                      >
                         {message.content}
                       </Typography>
                     </Paper>
@@ -92,7 +106,10 @@ const Chat: React.FC = () => {
                       variant="caption"
                       sx={{ marginLeft: "0.25rem" }}
                     >
-                      {new Date(message.createdAt).toLocaleTimeString()}
+                      {new Date(message.createdAt).toLocaleTimeString("en-US", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
                     </Typography>
                   </Stack>
                 </Grid>

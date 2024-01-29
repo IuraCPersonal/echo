@@ -13,7 +13,7 @@ import { Page } from "../../interfaces/page.interface";
 
 const privatePages: Page[] = [
   {
-    title: "Home",
+    title: "Welcome",
     path: "/",
   },
 ];

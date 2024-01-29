@@ -8,7 +8,13 @@ interface ChatListHeaderProps {
 
 const ChatListHeader: React.FC<ChatListHeaderProps> = ({ handleAddChat }) => {
   return (
-    <AppBar position="static" color="transparent">
+    <AppBar
+      position="static"
+      color="transparent"
+      sx={{
+        boxShadow: "none",
+      }}
+    >
       <Toolbar>
         <IconButton size="large" edge="start" onClick={handleAddChat}>
           <AddCircle />
