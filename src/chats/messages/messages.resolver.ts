@@ -31,7 +31,7 @@ export class MessagesResolver {
   }
 
   @Subscription(() => Message, {
-    filter: (payload, variables, context) => {
+    filter: (payload, variables: MessageCreatedArgs, context) => {
       // Explanation: We are filtering the subscription payload
       // by the chatId. If the chatId of the payload matches
       // the chatId of the subscription, the payload will be
@@ -40,12 +40,12 @@ export class MessagesResolver {
       const message: Message = payload.messageCreated;
 
       return (
-        message.chatId === variables.chatId &&
+        variables.chatIds.includes(message.chatId) &&
         userId !== message.user._id.toHexString()
       );
     },
   })
-  messageCreated(@Args() messageCreatedArgs: MessageCreatedArgs) {
-    return this.messagesService.messageCreated(messageCreatedArgs);
+  messageCreated(@Args() _messageCreatedArgs: MessageCreatedArgs) {
+    return this.messagesService.messageCreated();
   }
 }
