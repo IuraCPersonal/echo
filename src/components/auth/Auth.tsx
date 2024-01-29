@@ -8,6 +8,7 @@ interface AuthProps {
   submitLabel: string;
   onSubmit: (credentials: { email: string; password: string }) => Promise<void>;
   children: React.ReactNode;
+  extraFields?: React.ReactNode[];
   error?: string;
 }
 
@@ -15,6 +16,7 @@ const Auth: React.FC<AuthProps> = ({
   submitLabel,
   onSubmit,
   children,
+  extraFields,
   error,
 }) => {
   const [email, setEmail] = React.useState<string>("");
@@ -48,6 +50,7 @@ const Auth: React.FC<AuthProps> = ({
         error={!!error}
         helperText={error}
       />
+      {extraFields}
       <TextField
         type="password"
         label="Password"

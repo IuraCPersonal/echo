@@ -8,6 +8,7 @@ export const MessageFragment = graphql(`
     chatId
     user {
       _id
+      username
       email
     }
   }
