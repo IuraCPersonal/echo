@@ -37,9 +37,9 @@ const ChatListItem: React.FC<ChatListItemProps> = ({ chat, selected }) => {
                   variant="body2"
                   color="text.primary"
                 >
-                  Ali Connors
+                  {chat.latestMessage?.user?.username || ""}
                 </Typography>
-                {" — I'll be in your neighborhood doing errands this…"}
+                {" - " + (chat.latestMessage?.content || "")}
               </React.Fragment>
             }
           />
