@@ -15,8 +15,6 @@ import {
 } from "@mui/material";
 import { useCreateMessage } from "../../hooks/useCreateMessage";
 import { useGetMessages } from "../../hooks/useGetMessages";
-import { useMessageCreated } from "../../hooks/useMessageCreated";
-import { Message } from "../../gql/graphql";
 
 const Chat: React.FC = () => {
   const params = useParams();
@@ -29,7 +27,6 @@ const Chat: React.FC = () => {
   const { data } = useGetChat({ _id: chatId });
   const { data: messages } = useGetMessages({ chatId });
   const [createMessage] = useCreateMessage();
-  useMessageCreated({ chatId });
 
   const scrollToBottom = () => {
     divRef.current?.scrollIntoView({ behavior: "smooth" });

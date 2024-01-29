@@ -6,6 +6,7 @@ import ChatListHeader from "./chat-list-header/ChatListHeader";
 import ChatListAdd from "./chat-list-add/ChatListAdd";
 import { useGetChats } from "../../hooks/useGetChats";
 import { usePath } from "../../hooks/usePath";
+import { useMessageCreated } from "../../hooks/useMessageCreated";
 
 const ChatList: React.FC = () => {
   const [chatListAddVisible, setChatListAddVisible] =
@@ -14,6 +15,8 @@ const ChatList: React.FC = () => {
 
   const { path } = usePath();
   const { data } = useGetChats();
+
+  useMessageCreated({ chatIds: data?.chats.map((chat) => chat._id) ?? [] });
 
   React.useEffect(() => {
     const pathSplit = path.split("chats/");
