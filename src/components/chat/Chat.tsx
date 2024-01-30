@@ -84,7 +84,9 @@ const Chat: React.FC = () => {
                     placeItems: "center",
                   }}
                 >
-                  <Avatar alt="Me" src="" sx={{ height: 52, width: 52 }} />
+                  <Avatar alt="Me" src="" sx={{ height: 52, width: 52 }}>
+                    {message.user.username[0]}
+                  </Avatar>
                 </Grid>
                 <Grid item xs={10} lg={11}>
                   <Stack>

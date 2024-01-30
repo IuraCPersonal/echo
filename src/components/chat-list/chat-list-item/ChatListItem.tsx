@@ -45,7 +45,7 @@ const ChatListItem: React.FC<ChatListItemProps> = ({ chat, selected }) => {
           />
         </ListItemButton>
       </ListItem>
-      <Divider variant="inset" component="li" />
+      <Divider variant="inset" />
     </>
   );
 };
