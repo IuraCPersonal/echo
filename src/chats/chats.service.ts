@@ -45,10 +45,10 @@ export class ChatsService {
       // We are using the $skip and $limit operators to implement
       // pagination.
       {
-        $skip: paginationArgs?.skip,
+        $skip: paginationArgs.skip,
       },
       {
-        $limit: paginationArgs?.limit,
+        $limit: paginationArgs.limit,
       },
       // We are using the $unset operator to remove the messages field
       // from the document.
