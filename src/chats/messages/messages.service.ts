@@ -6,7 +6,6 @@ import { GetMessagesArgs } from './dto/get-messages.args';
 import { PubSub } from 'graphql-subscriptions';
 import { PUB_SUB } from 'src/common/constants/injection-tokens';
 import { MESSAGE_CREATED } from './constants/pubsub-triggers';
-import { MessageCreatedArgs } from './dto/message-created.args';
 import { MessageDocument } from './entities/message.document';
 import { Message } from './entities/message.entity';
 import { UsersService } from 'src/users/users.service';
@@ -57,7 +56,15 @@ export class MessagesService {
     return message;
   }
 
-  async getMessages({ chatId }: GetMessagesArgs) {
+  async countMessages(chatId: string) {
+    await this.chatsRepository.model.aggregate([
+      { $match: { _id: new Types.ObjectId(chatId) } },
+      { $unwind: '$messages' },
+      { $count: 'messages' },
+    ])[0];
+  }
+
+  async getMessages({ chatId, skip, limit }: GetMessagesArgs) {
     return this.chatsRepository.model.aggregate([
       // Explanation:
       // We are using the $match operator to find a chat
@@ -71,6 +78,9 @@ export class MessagesService {
       // We are using the $replaceRoot operator to promote the
       // messages field to the top level.
       { $replaceRoot: { newRoot: '$messages' } },
+      { $sort: { createdAt: -1 } },
+      { $skip: skip },
+      { $limit: limit },
       // Explanation:
       // We are using the $lookup operator to join the users
       // collection with the messages collection.
