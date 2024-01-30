@@ -3,6 +3,7 @@ import { CreateChatInput } from './dto/create-chat.input';
 import { UpdateChatInput } from './dto/update-chat.input';
 import { ChatsRepository } from './chats.repository';
 import { PipelineStage, Types } from 'mongoose';
+import { PaginationArgs } from 'src/common/dto/pagination-args.dto';
 
 @Injectable()
 export class ChatsService {
@@ -16,13 +17,39 @@ export class ChatsService {
     });
   }
 
-  async findMany(prePipelineStages: PipelineStage[] = []) {
+  async findMany(
+    prePipelineStages: PipelineStage[] = [],
+    paginationArgs?: PaginationArgs,
+  ) {
     const chats = await this.chatsRepository.model.aggregate([
       ...prePipelineStages,
-      // We are using the $addFields operator to create a new field
-      // called latestMessage that is the last element of the messages
-      // array.
-      { $set: { latestMessage: { $arrayElemAt: ['$messages', -1] } } },
+      // If the messages array is empty, we are using the $cond operator
+      // to return null, otherwise we are using the $arrayElemAt operator
+      // to get the last element of the messages array.
+      {
+        $set: {
+          latestMessage: {
+            $cond: [
+              '$messages',
+              { $arrayElemAt: ['$messages', -1] },
+              {
+                createdAt: new Date(),
+              },
+            ],
+          },
+        },
+      },
+      // We are using the $sort operator to sort the documents by the
+      // latestMessage.createdAt field in descending order.
+      { $sort: { 'latestMessage.createdAt': -1 } },
+      // We are using the $skip and $limit operators to implement
+      // pagination.
+      {
+        $skip: paginationArgs?.skip,
+      },
+      {
+        $limit: paginationArgs?.limit,
+      },
       // We are using the $unset operator to remove the messages field
       // from the document.
       { $unset: 'messages' },
@@ -70,6 +97,10 @@ export class ChatsService {
     }
 
     return chats[0];
+  }
+
+  async countChats() {
+    return this.chatsRepository.model.countDocuments({});
   }
 
   update(id: number, updateChatInput: UpdateChatInput) {
