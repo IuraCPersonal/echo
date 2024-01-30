@@ -1,6 +1,7 @@
 import * as React from "react";
 import {
   Avatar,
+  Box,
   Divider,
   ListItem,
   ListItemAvatar,
@@ -30,7 +31,13 @@ const ChatListItem: React.FC<ChatListItemProps> = ({ chat, selected }) => {
           <ListItemText
             primary={chat.name}
             secondary={
-              <React.Fragment>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "0.5rem",
+                }}
+              >
                 <Typography
                   sx={{ display: "inline" }}
                   component="span"
@@ -39,8 +46,10 @@ const ChatListItem: React.FC<ChatListItemProps> = ({ chat, selected }) => {
                 >
                   {chat.latestMessage?.user?.username || ""}
                 </Typography>
-                {" - " + (chat.latestMessage?.content || "")}
-              </React.Fragment>
+                <div className="content">
+                  {" " + (chat.latestMessage?.content || "")}
+                </div>
+              </Box>
             }
           />
         </ListItemButton>

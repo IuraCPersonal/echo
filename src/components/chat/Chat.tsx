@@ -15,6 +15,9 @@ import {
 } from "@mui/material";
 import { useCreateMessage } from "../../hooks/useCreateMessage";
 import { useGetMessages } from "../../hooks/useGetMessages";
+import { PAGE_SIZE } from "../../constants/page-size";
+import { useCountMessages } from "../../hooks/useCountMessages";
+import InfiniteScroll from "react-infinite-scroller";
 
 const Chat: React.FC = () => {
   const params = useParams();
@@ -25,16 +28,27 @@ const Chat: React.FC = () => {
   const location = useLocation();
 
   const { data } = useGetChat({ _id: chatId });
-  const { data: messages } = useGetMessages({ chatId });
+  const { data: messages, fetchMore } = useGetMessages({
+    chatId,
+    skip: 0,
+    limit: PAGE_SIZE,
+  });
   const [createMessage] = useCreateMessage();
+  const { messagesCount, countMessages } = useCountMessages(chatId);
 
   const scrollToBottom = () => {
     divRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   React.useEffect(() => {
-    setMessage("");
-    scrollToBottom();
+    countMessages();
+  }, [countMessages]);
+
+  React.useEffect(() => {
+    if (messages?.messages && messages.messages.length <= PAGE_SIZE) {
+      setMessage("");
+      scrollToBottom();
+    }
   }, [messages, location.pathname]);
 
   const handleCreateMessage = async () => {
@@ -66,55 +80,77 @@ const Chat: React.FC = () => {
           flex: 1,
         }}
       >
-        {messages &&
-          [...messages?.messages]
-            .sort(
-              (messageA, messageB) =>
-                new Date(messageA.createdAt).getTime() -
-                new Date(messageB.createdAt).getTime()
-            )
-            .map((message) => (
-              <Grid container alignItems="center" marginBottom="1rem">
-                <Grid
-                  item
-                  xs={2}
-                  lg={1}
-                  sx={{
-                    display: "grid",
-                    placeItems: "center",
-                  }}
-                >
-                  <Avatar alt="Me" src="" sx={{ height: 52, width: 52 }}>
-                    {message.user.username[0]}
-                  </Avatar>
-                </Grid>
-                <Grid item xs={10} lg={11}>
-                  <Stack>
-                    <Paper sx={{ width: "fit-content" }}>
+        <InfiniteScroll
+          pageStart={0}
+          isReverse
+          loadMore={() =>
+            fetchMore({
+              variables: {
+                skip: messages?.messages.length,
+              },
+            })
+          }
+          hasMore={
+            messages && messagesCount
+              ? messages.messages.length < messagesCount
+              : false
+          }
+          useWindow={false}
+        >
+          {messages &&
+            [...messages?.messages]
+              .sort(
+                (messageA, messageB) =>
+                  new Date(messageA.createdAt).getTime() -
+                  new Date(messageB.createdAt).getTime()
+              )
+              .map((message) => (
+                <Grid container alignItems="center" marginBottom="1rem">
+                  <Grid
+                    item
+                    xs={2}
+                    lg={1}
+                    sx={{
+                      display: "grid",
+                      placeItems: "center",
+                    }}
+                  >
+                    <Avatar alt="Me" src="" sx={{ height: 52, width: 52 }}>
+                      {message.user.username[0]}
+                    </Avatar>
+                  </Grid>
+                  <Grid item xs={10} lg={11}>
+                    <Stack>
+                      <Paper sx={{ width: "fit-content" }}>
+                        <Typography
+                          sx={{
+                            p: "0.9rem",
+                            wordBreak: "break-word",
+                            overflowWrap: "break-word",
+                          }}
+                        >
+                          {message.content}
+                        </Typography>
+                      </Paper>
                       <Typography
-                        sx={{
-                          p: "0.9rem",
-                          wordBreak: "break-word",
-                          overflowWrap: "break-word",
-                        }}
+                        variant="caption"
+                        sx={{ marginLeft: "0.25rem" }}
                       >
-                        {message.content}
+                        {new Date(message.createdAt).toLocaleTimeString(
+                          "en-US",
+                          {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          }
+                        )}{" "}
+                        - {new Date(message.createdAt).toLocaleDateString()}
                       </Typography>
-                    </Paper>
-                    <Typography
-                      variant="caption"
-                      sx={{ marginLeft: "0.25rem" }}
-                    >
-                      {new Date(message.createdAt).toLocaleTimeString("en-US", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </Typography>
-                  </Stack>
+                    </Stack>
+                  </Grid>
                 </Grid>
-              </Grid>
-            ))}
-        <div ref={divRef}></div>
+              ))}
+          <div ref={divRef}></div>
+        </InfiniteScroll>
       </Box>
       <Paper
         sx={{
