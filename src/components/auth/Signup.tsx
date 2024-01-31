@@ -56,8 +56,8 @@ const Signup: React.FC = () => {
         />,
       ]}
     >
-      <Link to="/login" style={{ alignSelf: "center" }}>
-        <MUILink>Already have an account? Login!</MUILink>
+      <Link to="/login" style={{ alignSelf: "center", textDecoration: "none" }}>
+        <MUILink underline="none">Already have an account? Login!</MUILink>
       </Link>
     </Auth>
   );

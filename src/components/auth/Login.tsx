@@ -14,8 +14,11 @@ const Login: React.FC = () => {
       onSubmit={(request) => login(request)}
       error={error}
     >
-      <Link to="/signup" style={{ alignSelf: "center" }}>
-        <MUILink>Don't have an account? Sign up!</MUILink>
+      <Link
+        to="/signup"
+        style={{ alignSelf: "center", textDecoration: "none" }}
+      >
+        <MUILink underline="none">Don't have an account? Sign up!</MUILink>
       </Link>
     </Auth>
   );

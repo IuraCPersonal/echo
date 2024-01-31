@@ -1,5 +1,4 @@
 import * as React from "react";
-import List from "@mui/material/List";
 import ChatListItem from "./chat-list-item/ChatListItem";
 import { Box, Divider, Stack } from "@mui/material";
 import ChatListHeader from "./chat-list-header/ChatListHeader";

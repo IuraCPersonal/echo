@@ -36,13 +36,13 @@ const Chat: React.FC = () => {
   const [createMessage] = useCreateMessage();
   const { messagesCount, countMessages } = useCountMessages(chatId);
 
-  const scrollToBottom = () => {
-    divRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
   React.useEffect(() => {
     countMessages();
   }, [countMessages]);
+
+  const scrollToBottom = () => {
+    divRef.current?.scrollIntoView();
+  };
 
   React.useEffect(() => {
     if (messages?.messages && messages.messages.length <= PAGE_SIZE) {
@@ -75,14 +75,13 @@ const Chat: React.FC = () => {
       <h2>{data?.chat.name}</h2>
       <Box
         sx={{
-          maxHeight: "70vh",
-          overflowY: "scroll",
-          flex: 1,
+          maxHeight: "75vh",
+          overflowY: "auto",
         }}
       >
         <InfiniteScroll
           pageStart={0}
-          isReverse
+          isReverse={true}
           loadMore={() =>
             fetchMore({
               variables: {
@@ -98,14 +97,19 @@ const Chat: React.FC = () => {
           useWindow={false}
         >
           {messages &&
-            [...messages?.messages]
+            [...messages.messages]
               .sort(
                 (messageA, messageB) =>
                   new Date(messageA.createdAt).getTime() -
                   new Date(messageB.createdAt).getTime()
               )
               .map((message) => (
-                <Grid container alignItems="center" marginBottom="1rem">
+                <Grid
+                  key={message._id}
+                  container
+                  alignItems="center"
+                  marginBottom="1rem"
+                >
                   <Grid
                     item
                     xs={2}
