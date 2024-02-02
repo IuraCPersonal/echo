@@ -11,6 +11,7 @@ import {
   InputBase,
   Paper,
   Stack,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { useCreateMessage } from "../../hooks/useCreateMessage";
@@ -18,6 +19,7 @@ import { useGetMessages } from "../../hooks/useGetMessages";
 import { PAGE_SIZE } from "../../constants/page-size";
 import { useCountMessages } from "../../hooks/useCountMessages";
 import InfiniteScroll from "react-infinite-scroller";
+import MessageContainer from "./Message";
 
 const Chat: React.FC = () => {
   const params = useParams();
@@ -75,7 +77,7 @@ const Chat: React.FC = () => {
       <h2>{data?.chat.name}</h2>
       <Box
         sx={{
-          maxHeight: "75vh",
+          height: "71vh",
           overflowY: "auto",
         }}
       >
@@ -104,54 +106,7 @@ const Chat: React.FC = () => {
                   new Date(messageB.createdAt).getTime()
               )
               .map((message) => (
-                <Grid
-                  key={message._id}
-                  container
-                  alignItems="center"
-                  marginBottom="1rem"
-                >
-                  <Grid
-                    item
-                    xs={2}
-                    lg={1}
-                    sx={{
-                      display: "grid",
-                      placeItems: "center",
-                    }}
-                  >
-                    <Avatar alt="Me" src="" sx={{ height: 52, width: 52 }}>
-                      {message.user.username[0]}
-                    </Avatar>
-                  </Grid>
-                  <Grid item xs={10} lg={11}>
-                    <Stack>
-                      <Paper sx={{ width: "fit-content" }}>
-                        <Typography
-                          sx={{
-                            p: "0.9rem",
-                            wordBreak: "break-word",
-                            overflowWrap: "break-word",
-                          }}
-                        >
-                          {message.content}
-                        </Typography>
-                      </Paper>
-                      <Typography
-                        variant="caption"
-                        sx={{ marginLeft: "0.25rem" }}
-                      >
-                        {new Date(message.createdAt).toLocaleTimeString(
-                          "en-US",
-                          {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          }
-                        )}{" "}
-                        - {new Date(message.createdAt).toLocaleDateString()}
-                      </Typography>
-                    </Stack>
-                  </Grid>
-                </Grid>
+                <MessageContainer key={message._id} message={message} />
               ))}
           <div ref={divRef}></div>
         </InfiniteScroll>

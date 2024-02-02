@@ -31,25 +31,15 @@ const ChatListItem: React.FC<ChatListItemProps> = ({ chat, selected }) => {
           <ListItemText
             primary={chat.name}
             secondary={
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: "0.5rem",
-                }}
+              <Typography
+                sx={{ display: "inline" }}
+                component="span"
+                variant="body2"
+                color="text.primary"
               >
-                <Typography
-                  sx={{ display: "inline" }}
-                  component="span"
-                  variant="body2"
-                  color="text.primary"
-                >
-                  {chat.latestMessage?.user?.username || ""}
-                </Typography>
-                <div className="content">
-                  {" " + (chat.latestMessage?.content || "")}
-                </div>
-              </Box>
+                <b>{chat.latestMessage?.user?.username || ""}</b>
+                {" " + (chat.latestMessage?.content || "")}
+              </Typography>
             }
           />
         </ListItemButton>

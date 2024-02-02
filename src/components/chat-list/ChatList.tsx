@@ -1,6 +1,6 @@
 import * as React from "react";
 import ChatListItem from "./chat-list-item/ChatListItem";
-import { Box, Divider, Stack } from "@mui/material";
+import { Box, Divider, ListItem, Skeleton, Stack } from "@mui/material";
 import ChatListHeader from "./chat-list-header/ChatListHeader";
 import ChatListAdd from "./chat-list-add/ChatListAdd";
 import { useGetChats } from "../../hooks/useGetChats";
@@ -35,6 +35,15 @@ const ChatList: React.FC = () => {
   React.useEffect(() => {
     countChats();
   }, [countChats]);
+
+  if (!data)
+    return (
+      <Stack spacing={2}>
+        <Skeleton component={ListItem} variant="rectangular" height={75} />
+        <Skeleton component={ListItem} variant="rectangular" height={75} />
+        <Skeleton component={ListItem} variant="rectangular" height={75} />
+      </Stack>
+    );
 
   return (
     <>
