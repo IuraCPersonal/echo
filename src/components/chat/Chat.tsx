@@ -57,7 +57,7 @@ const Chat: React.FC = () => {
     await createMessage({
       variables: {
         createMessageInput: {
-          content: message,
+          content: message.trim(),
           chatId,
         },
       },
@@ -131,7 +131,7 @@ const Chat: React.FC = () => {
           onChange={(event) => setMessage(event.target.value)}
           placeholder="Send message"
           onKeyDown={async (event) => {
-            if (event.key === "Enter") {
+            if (event.key === "Enter" && message.length > 0) {
               await handleCreateMessage();
             }
           }}
@@ -142,6 +142,7 @@ const Chat: React.FC = () => {
           sx={{
             p: "10px",
           }}
+          disabled={message.length === 0}
           onClick={handleCreateMessage}
         >
           <SendIcon />

@@ -1,10 +1,4 @@
-import {
-  Container,
-  CssBaseline,
-  Grid,
-  ThemeProvider,
-  createTheme,
-} from "@mui/material";
+import { Container, CssBaseline, Grid } from "@mui/material";
 import { ApolloProvider } from "@apollo/client";
 import { RouterProvider } from "react-router-dom";
 
@@ -15,12 +9,7 @@ import Header from "./components/header/Header";
 import Snackbar from "./components/snackbar/Snackbar";
 import ChatList from "./components/chat-list/ChatList";
 import { usePath } from "./hooks/usePath";
-
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-  },
-});
+import ColorModeProvider from "./theme/theme";
 
 const App = () => {
   const { path } = usePath();
@@ -29,7 +18,7 @@ const App = () => {
 
   return (
     <ApolloProvider client={client}>
-      <ThemeProvider theme={darkTheme}>
+      <ColorModeProvider>
         <CssBaseline />
         <Header />
         <Guard>
@@ -52,7 +41,7 @@ const App = () => {
           </Container>
         </Guard>
         <Snackbar />
-      </ThemeProvider>
+      </ColorModeProvider>
     </ApolloProvider>
   );
 };

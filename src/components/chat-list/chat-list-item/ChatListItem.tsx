@@ -11,6 +11,8 @@ import {
 import { router } from "../../router/Routes";
 import { Chat } from "../../../gql/graphql";
 
+import "./ChatListItem.css";
+
 interface ChatListItemProps {
   chat: Chat;
   selected: boolean;
@@ -37,7 +39,9 @@ const ChatListItem: React.FC<ChatListItemProps> = ({ chat, selected }) => {
                 color="text.primary"
               >
                 <b>{chat.latestMessage?.user?.username || ""}</b>
-                {" " + (chat.latestMessage?.content || "")}
+                <span className="content">
+                  {" " + (chat.latestMessage?.content || "")}
+                </span>
               </Typography>
             }
           />

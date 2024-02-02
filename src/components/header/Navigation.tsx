@@ -17,7 +17,8 @@ const Navigation: React.FC<NavigationProps> = ({ pages }) => {
             onClick={() => {
               router.navigate(page.path);
             }}
-            sx={{ my: 2, color: "white", display: "block" }}
+            color="inherit"
+            sx={{ my: 2, display: "block" }}
           >
             {page.title}
           </Button>

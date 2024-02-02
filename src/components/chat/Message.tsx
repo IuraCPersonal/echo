@@ -25,7 +25,7 @@ const MessageContainer: React.FC<MessageProps> = ({ message }) => {
       variants={variants}
       initial="initial"
       animate="animate"
-      alignItems="center"
+      alignItems="start"
       justifyContent="flex-end"
       flexDirection={isMe ? "row-reverse" : "row"}
       marginBottom="1rem"
@@ -47,7 +47,13 @@ const MessageContainer: React.FC<MessageProps> = ({ message }) => {
       </Grid>
       <Grid item xs={10} lg={11}>
         <Stack alignItems={isMe ? "flex-end" : "flex-start"}>
-          <Paper sx={{ width: "fit-content" }}>
+          <Paper
+            elevation={1}
+            sx={{
+              width: "fit-content",
+              boxShadow: "box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px",
+            }}
+          >
             <Typography
               sx={{
                 p: "0.9rem",

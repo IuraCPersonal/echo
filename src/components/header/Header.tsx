@@ -10,6 +10,7 @@ import Settings from "./Settings";
 import { useReactiveVar } from "@apollo/client";
 import { authenticatedVar } from "../../constants/authenticated";
 import { Page } from "../../interfaces/page.interface";
+import ToggleTheme from "./ToggleTheme";
 
 const privatePages: Page[] = [
   {
@@ -33,7 +34,7 @@ const Header: React.FC = () => {
   const authenticated = useReactiveVar(authenticatedVar);
 
   return (
-    <AppBar position="static">
+    <AppBar color="transparent" position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Branding />
@@ -43,6 +44,7 @@ const Header: React.FC = () => {
           <MobileBranding />
           <Navigation pages={authenticated ? privatePages : publicPages} />
 
+          <ToggleTheme />
           {authenticated && <Settings />}
         </Toolbar>
       </Container>

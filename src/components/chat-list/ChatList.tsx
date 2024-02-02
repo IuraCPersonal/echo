@@ -9,8 +9,23 @@ import { useMessageCreated } from "../../hooks/useMessageCreated";
 import { PAGE_SIZE } from "../../constants/page-size";
 import InfiniteScroll from "react-infinite-scroller";
 import { useCountChats } from "../../hooks/useCountChats";
+import _debounce from "lodash/debounce";
 
 const ChatList: React.FC = () => {
+  const [filterBy, setFilterBy] = React.useState("");
+  const [debouncedFilterBy, setDebouncedFilterBy] = React.useState("");
+
+  const handleDebounceFn = (inputValue: any) => {
+    setDebouncedFilterBy(inputValue);
+  };
+
+  const debounceFn = React.useCallback(_debounce(handleDebounceFn, 300), []);
+
+  const handleFilterBy = (event: any) => {
+    setFilterBy(event.target.value);
+    debounceFn(event.target.value);
+  };
+
   const [chatListAddVisible, setChatListAddVisible] =
     React.useState<boolean>(false);
   const [selectedChatId, setSelectedChatId] = React.useState<string>("");
@@ -57,6 +72,8 @@ const ChatList: React.FC = () => {
           handleAddChat={() => {
             setChatListAddVisible(true);
           }}
+          handleFilterBy={handleFilterBy}
+          filterBy={filterBy}
         />
         <Divider />
         <Box
@@ -85,6 +102,11 @@ const ChatList: React.FC = () => {
           >
             {data?.chats &&
               [...data.chats]
+                .filter((chat) => {
+                  return chat.name
+                    .toLowerCase()
+                    .includes(debouncedFilterBy.toLowerCase());
+                })
                 .sort((chatA, chatB) => {
                   if (!chatA.latestMessage) return -1;
 
