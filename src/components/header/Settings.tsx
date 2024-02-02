@@ -1,19 +1,24 @@
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import Avatar from "@mui/material/Avatar";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
+import {
+  Badge,
+  IconButton,
+  Box,
+  Typography,
+  Menu,
+  Avatar,
+  Tooltip,
+  MenuItem,
+} from "@mui/material";
+
 import { useLogout } from "../../hooks/useLogout";
 import { onLogout } from "../../utils/logout";
 import { snackVar } from "../../constants/snack";
+import { useGetMe } from "../../hooks/useGetMe";
 import { UNKNOWN_ERROR_SNACK_MESSAGE } from "../../constants/errors";
 
 const Settings: React.FC = () => {
   const { logout } = useLogout();
+  const { data: user } = useGetMe();
 
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
@@ -32,7 +37,19 @@ const Settings: React.FC = () => {
       <Box sx={{ flexGrow: 0 }}>
         <Tooltip title="Open settings">
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-            <Avatar alt="Remy Sharp" src="" />
+            <Badge
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
+              variant="dot"
+              color="success"
+              overlap="circular"
+            >
+              <Avatar alt="Remy Sharp" src="">
+                {user?.me.username[0]}
+              </Avatar>
+            </Badge>
           </IconButton>
         </Tooltip>
         <Menu

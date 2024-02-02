@@ -1,7 +1,9 @@
-import { Avatar, Grid, Paper, Stack, Tooltip, Typography } from "@mui/material";
 import * as React from "react";
-import { Message } from "../../gql/graphql";
 import { motion } from "framer-motion";
+import { Avatar, Grid, Paper, Stack, Tooltip, Typography } from "@mui/material";
+
+import { Message } from "../../gql/graphql";
+import { useGetMe } from "../../hooks/useGetMe";
 
 interface MessageProps {
   message: Message;
@@ -13,6 +15,9 @@ const variants = {
 };
 
 const MessageContainer: React.FC<MessageProps> = ({ message }) => {
+  const { data: user } = useGetMe();
+  const isMe = message.user._id === user?.me._id;
+
   return (
     <Grid
       container
@@ -21,6 +26,8 @@ const MessageContainer: React.FC<MessageProps> = ({ message }) => {
       initial="initial"
       animate="animate"
       alignItems="center"
+      justifyContent="flex-end"
+      flexDirection={isMe ? "row-reverse" : "row"}
       marginBottom="1rem"
     >
       <Grid
@@ -39,7 +46,7 @@ const MessageContainer: React.FC<MessageProps> = ({ message }) => {
         </Tooltip>
       </Grid>
       <Grid item xs={10} lg={11}>
-        <Stack>
+        <Stack alignItems={isMe ? "flex-end" : "flex-start"}>
           <Paper sx={{ width: "fit-content" }}>
             <Typography
               sx={{

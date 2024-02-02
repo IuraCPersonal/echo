@@ -74,10 +74,10 @@ const Chat: React.FC = () => {
         justifyContent: "space-between",
       }}
     >
-      <h2>{data?.chat.name}</h2>
+      <h2>{data?.chat.name} My Title</h2>
       <Box
         sx={{
-          height: "71vh",
+          height: "64vh",
           overflowY: "auto",
         }}
       >

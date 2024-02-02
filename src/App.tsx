@@ -39,10 +39,10 @@ const App = () => {
           >
             {showChatList ? (
               <Grid container spacing={5} sx={{ height: "100%" }}>
-                <Grid item xs={12} md={5} lg={4} xl={3}>
+                <Grid item xs={12} md={5} lg={3} xl={3}>
                   <ChatList />
                 </Grid>
-                <Grid item xs={12} md={7} lg={8} xl={9}>
+                <Grid item xs={12} md={7} lg={9} xl={9}>
                   <Routes />
                 </Grid>
               </Grid>
