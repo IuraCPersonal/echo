@@ -25,12 +25,6 @@ export default function ColorModeProvider({
       createTheme({
         palette: {
           mode,
-          primary: {
-            main: "#E0C2FF",
-            light: "#F5EBFF",
-            // dark: will be calculated from palette.secondary.main,
-            contrastText: "#47008F",
-          },
         },
       }),
     [mode]

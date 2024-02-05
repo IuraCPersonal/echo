@@ -38,16 +38,15 @@ const ChatListItem: React.FC<ChatListItemProps> = ({ chat, selected }) => {
                 variant="body2"
                 color="text.primary"
               >
-                <b>{chat.latestMessage?.user?.username || ""}</b>
                 <span className="content">
-                  {" " + (chat.latestMessage?.content || "")}
+                  <b>{chat.latestMessage?.user?.username || ""}</b>{" "}
+                  {chat.latestMessage?.content || ""}
                 </span>
               </Typography>
             }
           />
         </ListItemButton>
       </ListItem>
-      <Divider variant="inset" />
     </>
   );
 };

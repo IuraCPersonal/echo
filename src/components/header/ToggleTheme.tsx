@@ -23,14 +23,13 @@ const ToggleTheme: React.FC = () => {
           onClick={colorMode.toggleColorMode}
           color="secondary"
           sx={{
-            backgroundColor: mode === "dark" ? "orange" : "purple",
             borderRadius: 3,
           }}
         >
           {theme.palette.mode === "dark" ? (
-            <LightMode sx={{ color: "#fff" }} />
+            <LightMode sx={{ color: "orange" }} />
           ) : (
-            <DarkMode sx={{ color: "#fff" }} />
+            <DarkMode sx={{ color: "#1F2544" }} />
           )}
         </IconButton>
       </motion.div>

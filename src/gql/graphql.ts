@@ -57,6 +57,7 @@ export type Mutation = {
   removeChat: Chat;
   removeUser: User;
   updateChat: Chat;
+  updateMessage: Message;
   updateUser: User;
 };
 
@@ -83,6 +84,11 @@ export type MutationRemoveChatArgs = {
 
 export type MutationUpdateChatArgs = {
   updateChatInput: UpdateChatInput;
+};
+
+
+export type MutationUpdateMessageArgs = {
+  updateMessageInput: UpdateMessageInput;
 };
 
 
@@ -136,6 +142,12 @@ export type SubscriptionMessageCreatedArgs = {
 export type UpdateChatInput = {
   id: Scalars['Int']['input'];
   name?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateMessageInput = {
+  chatId: Scalars['String']['input'];
+  content: Scalars['String']['input'];
+  messageId: Scalars['String']['input'];
 };
 
 export type UpdateUserInput = {

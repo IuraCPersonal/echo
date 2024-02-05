@@ -4,6 +4,8 @@ import { Avatar, Grid, Paper, Stack, Tooltip, Typography } from "@mui/material";
 
 import { Message } from "../../gql/graphql";
 import { useGetMe } from "../../hooks/useGetMe";
+import MessageActions from "./MessageActions";
+import useAnchorElement from "../../hooks/useAnchorElement";
 
 interface MessageProps {
   message: Message;
@@ -17,6 +19,12 @@ const variants = {
 const MessageContainer: React.FC<MessageProps> = ({ message }) => {
   const { data: user } = useGetMe();
   const isMe = message.user._id === user?.me._id;
+
+  const {
+    anchorEl: anchorElMessage,
+    handleClick: handleOpenMessageActions,
+    handleClose: handleCloseMessageActions,
+  } = useAnchorElement();
 
   return (
     <Grid
@@ -51,10 +59,16 @@ const MessageContainer: React.FC<MessageProps> = ({ message }) => {
             elevation={1}
             sx={{
               width: "fit-content",
-              boxShadow: "box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px",
+              backgroundColor: isMe ? "primary.main" : "background.paper",
+            }}
+            onContextMenu={(event) => {
+              event.preventDefault();
+              handleCloseMessageActions();
+              handleOpenMessageActions(event);
             }}
           >
             <Typography
+              color={isMe ? "#ffffff" : "text.primary"}
               sx={{
                 p: "0.9rem",
                 wordBreak: "break-word",
@@ -72,6 +86,10 @@ const MessageContainer: React.FC<MessageProps> = ({ message }) => {
             - {new Date(message.createdAt).toLocaleDateString()}
           </Typography>
         </Stack>
+        <MessageActions
+          anchorEl={anchorElMessage}
+          handleClose={handleCloseMessageActions}
+        />
       </Grid>
     </Grid>
   );

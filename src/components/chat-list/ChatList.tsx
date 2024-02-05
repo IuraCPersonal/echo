@@ -75,7 +75,6 @@ const ChatList: React.FC = () => {
           handleFilterBy={handleFilterBy}
           filterBy={filterBy}
         />
-        <Divider />
         <Box
           sx={{
             width: "100%",

@@ -18,7 +18,7 @@ const Navigation: React.FC<NavigationProps> = ({ pages }) => {
               router.navigate(page.path);
             }}
             color="inherit"
-            sx={{ my: 2, display: "block" }}
+            sx={{ my: 2, display: "block", textTransform: "capitalize" }}
           >
             {page.title}
           </Button>

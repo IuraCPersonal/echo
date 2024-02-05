@@ -17,6 +17,14 @@ const privatePages: Page[] = [
     title: "Welcome",
     path: "/",
   },
+  {
+    title: "About",
+    path: "/about",
+  },
+  {
+    title: "Report Bug",
+    path: "/report-bug",
+  },
 ];
 
 const publicPages: Page[] = [
@@ -34,7 +42,7 @@ const Header: React.FC = () => {
   const authenticated = useReactiveVar(authenticatedVar);
 
   return (
-    <AppBar color="transparent" position="static">
+    <AppBar color="primary" position="static" elevation={1}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Branding />
