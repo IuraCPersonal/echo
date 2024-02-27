@@ -6,4 +6,5 @@ export const onLogout = () => {
   authenticatedVar(false);
   router.navigate("/login");
   client.resetStore();
+  client.onResetStore(() => new Promise(() => {}));
 };

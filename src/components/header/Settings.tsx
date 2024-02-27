@@ -15,6 +15,7 @@ import { onLogout } from "../../utils/logout";
 import { snackVar } from "../../constants/snack";
 import { useGetMe } from "../../hooks/useGetMe";
 import { UNKNOWN_ERROR_SNACK_MESSAGE } from "../../constants/errors";
+import { router } from "../router/Routes";
 
 const Settings: React.FC = () => {
   const { logout } = useLogout();
@@ -68,6 +69,14 @@ const Settings: React.FC = () => {
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}
         >
+          <MenuItem
+            key="Profile"
+            onClick={() => {
+              router.navigate("/profile");
+            }}
+          >
+            <Typography textAlign="center">Profile</Typography>
+          </MenuItem>
           <MenuItem
             key="Logout"
             onClick={async () => {
