@@ -75,7 +75,7 @@ export class MessagesService {
   }
 
   async getMessages({ chatId, skip, limit }: GetMessagesArgs) {
-    return this.chatsRepository.model.aggregate([
+    const messages = await this.chatsRepository.model.aggregate([
       // Explanation:
       // We are using the $match operator to find a chat
       // that has the given chatId.
@@ -107,6 +107,10 @@ export class MessagesService {
       { $unset: 'userId' },
       { $set: { chatId } },
     ]);
+
+    for (const message of messages) {
+      message.user = this.usersService.toEntiry(message.user);
+    }
   }
 
   async messageCreated() {

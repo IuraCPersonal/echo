@@ -4,10 +4,14 @@ import { UpdateChatInput } from './dto/update-chat.input';
 import { ChatsRepository } from './chats.repository';
 import { PipelineStage, Types } from 'mongoose';
 import { PaginationArgs } from 'src/common/dto/pagination-args.dto';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class ChatsService {
-  constructor(private readonly chatsRepository: ChatsRepository) {}
+  constructor(
+    private readonly chatsRepository: ChatsRepository,
+    private readonly usersService: UsersService,
+  ) {}
 
   async create(createChatInput: CreateChatInput, userId: string) {
     return this.chatsRepository.create({
@@ -78,7 +82,9 @@ export class ChatsService {
       // In this case, we know that the array will always have
       // only one element, so we are getting the first element
       // of the array.
-      chat.latestMessage.user = chat.latestMessage.user[0];
+      chat.latestMessage.user = this.usersService.toEntiry(
+        chat.latestMessage.user[0],
+      );
 
       delete chat.latestMessage.userId;
       chat.latestMessage.chatId = chat._id;
