@@ -42,7 +42,7 @@ const Header: React.FC = () => {
   const authenticated = useReactiveVar(authenticatedVar);
 
   return (
-    <AppBar color="primary" position="static" elevation={1}>
+    <AppBar color="transparent" position="static" elevation={1}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Branding />

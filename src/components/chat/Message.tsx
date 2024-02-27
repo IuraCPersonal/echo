@@ -6,6 +6,7 @@ import { Message } from "../../gql/graphql";
 import { useGetMe } from "../../hooks/useGetMe";
 import MessageActions from "./MessageActions";
 import useAnchorElement from "../../hooks/useAnchorElement";
+import { blue } from "@mui/material/colors";
 
 interface MessageProps {
   message: Message;

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useMediaQuery } from "@mui/material";
+import { blue } from "@mui/material/colors";
 
 export default function ColorModeProvider({
   children,
@@ -25,6 +26,9 @@ export default function ColorModeProvider({
       createTheme({
         palette: {
           mode,
+          primary: {
+            main: blue[500],
+          },
         },
       }),
     [mode]

@@ -6,7 +6,6 @@ import { router } from "../router/Routes";
 const Branding: React.FC = () => {
   return (
     <>
-      {/* <ForumIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
       <Typography
         variant="h6"
         noWrap
@@ -23,7 +22,7 @@ const Branding: React.FC = () => {
           textDecoration: "none",
         }}
       >
-        Echo
+        ECHO
       </Typography>
     </>
   );
