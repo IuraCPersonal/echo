@@ -9,6 +9,7 @@ import { MESSAGE_CREATED } from './constants/pubsub-triggers';
 import { MessageDocument } from './entities/message.document';
 import { Message } from './entities/message.entity';
 import { UsersService } from 'src/users/users.service';
+import { UpdateMessageInput } from './dto/update-message.input';
 
 @Injectable()
 export class MessagesService {
@@ -110,5 +111,28 @@ export class MessagesService {
 
   async messageCreated() {
     return this.pubSub.asyncIterator(MESSAGE_CREATED);
+  }
+
+  async updateMessage({ chatId, messageId, content }, userId: string) {
+    const chat = await this.chatsRepository.model.findOne({
+      _id: chatId,
+      'messages._id': messageId,
+    });
+
+    if (!chat) {
+      throw new Error('Chat not found');
+    }
+
+    const message = chat.messages.find((m) => m._id.equals(messageId));
+
+    if (message.userId.toHexString() !== userId) {
+      throw new Error('Unauthorized');
+    }
+
+    message.content = content;
+
+    await chat.save();
+
+    return message;
   }
 }
