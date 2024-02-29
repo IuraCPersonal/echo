@@ -47,7 +47,7 @@ const Settings: React.FC = () => {
               color="success"
               overlap="circular"
             >
-              <Avatar alt="Remy Sharp" src="">
+              <Avatar alt="Remy Sharp" src={user?.me?.imageUrl}>
                 {user?.me.username[0]}
               </Avatar>
             </Badge>
