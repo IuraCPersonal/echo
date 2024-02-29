@@ -111,6 +111,8 @@ export class MessagesService {
     for (const message of messages) {
       message.user = this.usersService.toEntiry(message.user);
     }
+
+    return messages;
   }
 
   async messageCreated() {
