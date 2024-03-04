@@ -10,7 +10,9 @@ export const getMeDocument = graphql(`
 `);
 
 const useGetMe = () => {
-  return useQuery(getMeDocument);
+  return useQuery(getMeDocument, {
+    refetchWritePolicy: "overwrite",
+  });
 };
 
 export { useGetMe };

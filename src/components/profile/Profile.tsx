@@ -24,6 +24,8 @@ const Profile: React.FC = () => {
       }
 
       snackVar({ message: "Images Uploaded.", severity: "success" });
+
+      me.refetch();
     } catch (error) {
       snackVar({ message: "Error Uploading File.", severity: "error" });
     }
