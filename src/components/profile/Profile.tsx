@@ -4,6 +4,7 @@ import { useGetMe } from "../../hooks/useGetMe";
 import { UploadFileOutlined } from "@mui/icons-material";
 import { API_URL } from "../../constants/urls";
 import { snackVar } from "../../constants/snack";
+import { commonFetch } from "../../utils/fetch";
 
 const Profile: React.FC = () => {
   const me = useGetMe();
@@ -14,7 +15,7 @@ const Profile: React.FC = () => {
 
       formData.append("file", event.target.files[0]);
 
-      const res = await fetch(`${API_URL}/users/image`, {
+      const res = await commonFetch(`${API_URL}/users/image`, {
         method: "POST",
         body: formData,
       });
