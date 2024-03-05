@@ -27,6 +27,7 @@ import { AuthService } from './auth/auth.service';
       useFactory: (authService: AuthService) => {
         return {
           autoSchemaFile: true,
+          cors: true,
           subscriptions: {
             'graphql-ws': {
               onConnect: (context: any) => {
