@@ -48,12 +48,12 @@ export class ChatsService {
       { $sort: { 'latestMessage.createdAt': -1 } },
       // We are using the $skip and $limit operators to implement
       // pagination.
-      {
-        $skip: paginationArgs.skip,
-      },
-      {
-        $limit: paginationArgs.limit,
-      },
+      // {
+      //   $skip: paginationArgs?.skip || 0,
+      // },
+      // {
+      //   $limit: paginationArgs?.limit || 10,
+      // },
       // We are using the $unset operator to remove the messages field
       // from the document.
       { $unset: 'messages' },
@@ -95,7 +95,7 @@ export class ChatsService {
 
   async findOne(_id: string) {
     const chats = await this.findMany([
-      { $match: { chatId: new Types.ObjectId(_id) } },
+      { $match: { _id: new Types.ObjectId(_id) } },
     ]);
 
     if (!chats[0]) {
