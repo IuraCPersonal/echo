@@ -67,8 +67,8 @@ const Chat: React.FC = () => {
   React.useEffect(() => {
     if (messages?.messages && messages.messages.length <= PAGE_SIZE) {
       setMessage("");
-      scrollToBottom();
     }
+    scrollToBottom();
   }, [messages]);
 
   React.useEffect(() => {
@@ -98,7 +98,7 @@ const Chat: React.FC = () => {
           justifyContent: "space-between",
         }}
       >
-        <h2>{data?.chat.name} My Title</h2>
+        <h2>{data?.chat.name}</h2>
         <Box
           sx={{
             height: "64vh",
